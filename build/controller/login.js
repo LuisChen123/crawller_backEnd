@@ -19,6 +19,10 @@ var Login = /** @class */ (function () {
     Login.isLogin = function (req) {
         return !!(req.session ? req.session.login : false);
     };
+    Login.prototype.isLogin = function (req, res) {
+        var isLogin = Login_1.isLogin(req);
+        res.json(utils_1.getResponseData(isLogin));
+    };
     Login.prototype.login = function (req, res) {
         var password = req.body.password;
         var isLogin = Login_1.isLogin(req);
@@ -51,6 +55,12 @@ var Login = /** @class */ (function () {
         }
     };
     var Login_1;
+    __decorate([
+        decorator_1.get('/api/isLogin'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object, Object]),
+        __metadata("design:returntype", void 0)
+    ], Login.prototype, "isLogin", null);
     __decorate([
         decorator_1.post('/login'),
         __metadata("design:type", Function),
