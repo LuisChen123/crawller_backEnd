@@ -27,7 +27,7 @@ var Login = /** @class */ (function () {
         var password = req.body.password;
         var isLogin = Login_1.isLogin(req);
         if (isLogin) {
-            res.json(utils_1.getResponseData(false, 'already login'));
+            res.json(utils_1.getResponseData(true));
         }
         else {
             if (password === '123' && req.session) {
@@ -45,18 +45,9 @@ var Login = /** @class */ (function () {
         }
         res.json(utils_1.getResponseData(true));
     };
-    Login.prototype.home = function (req, res) {
-        var isLogin = Login_1.isLogin(req);
-        if (isLogin) {
-            res.send("\n    <html>\n    <body>\n      <a href='/getData'>get some data</a>\n      <a href='/showData'>show me the the data</a>\n      <a href='/logout'>log out</a>\n    </body>\n    </html>\n    ");
-        }
-        else {
-            res.send("\n    <html>\n    <body>\n      <form method = \"post\" action=\"/login\">\n      <input type=\"password\" name =\"password\" /> \n      <button>submit</button>\n      </form>\n    </body>\n    </html>\n    ");
-        }
-    };
     var Login_1;
     __decorate([
-        decorator_1.get('/api/isLogin'),
+        decorator_1.get('/isLogin'),
         __metadata("design:type", Function),
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
@@ -73,14 +64,8 @@ var Login = /** @class */ (function () {
         __metadata("design:paramtypes", [Object, Object]),
         __metadata("design:returntype", void 0)
     ], Login.prototype, "logout", null);
-    __decorate([
-        decorator_1.get('/'),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Object, Object]),
-        __metadata("design:returntype", void 0)
-    ], Login.prototype, "home", null);
     Login = Login_1 = __decorate([
-        decorator_1.controller('/')
+        decorator_1.controller('/api')
     ], Login);
     return Login;
 }());

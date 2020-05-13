@@ -7,13 +7,13 @@ interface BodyRequest extends Request {
   body: { [key: string]: string | undefined };
 }
 
-@controller('/')
+@controller('/api')
 export class Login {
   static isLogin(req: BodyRequest): boolean {
     return !!(req.session ? req.session.login : false);
   }
 
-  @get('/api/isLogin')
+  @get('/isLogin')
   isLogin(req: BodyRequest, res: Response): void {
     const isLogin = Login.isLogin(req);
     res.json(getResponseData(isLogin));
@@ -24,7 +24,7 @@ export class Login {
     const { password } = req.body;
     const isLogin = Login.isLogin(req);
     if (isLogin) {
-      res.json(getResponseData(false, 'already login'));
+      res.json(getResponseData(true));
     } else {
       if (password === '123' && req.session) {
         req.session.login = true;
@@ -41,32 +41,5 @@ export class Login {
       req.session.login = false;
     }
     res.json(getResponseData(true));
-  }
-
-  @get('/')
-  home(req: BodyRequest, res: Response): void {
-    const isLogin = Login.isLogin(req);
-    if (isLogin) {
-      res.send(`
-    <html>
-    <body>
-      <a href='/getData'>get some data</a>
-      <a href='/showData'>show me the the data</a>
-      <a href='/logout'>log out</a>
-    </body>
-    </html>
-    `);
-    } else {
-      res.send(`
-    <html>
-    <body>
-      <form method = "post" action="/login">
-      <input type="password" name ="password" /> 
-      <button>submit</button>
-      </form>
-    </body>
-    </html>
-    `);
-    }
   }
 }
